@@ -22,7 +22,7 @@ func envPortOr(port string) string {
 func main() {
 
 	if err := godotenv.Load(); err != nil {
-		fmt.Println("Main Error loading environmental variables")
+		fmt.Printf("Main Error loading environmental variables: %s", err)
 		return
 	}
 

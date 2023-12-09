@@ -15,16 +15,15 @@ func envPortOr(port string) string {
 	if envPort := os.Getenv("PORT"); envPort != "" {
 		return ":" + envPort
 	}
+	if err := godotenv.Load(); err != nil {
+		fmt.Printf("Main Error loading environmental variables: %s", err)
+		return ""
+	}
 	// Otherwise, return the value of `port` variable from function argument
 	return ":" + port
 }
 
 func main() {
-
-	if err := godotenv.Load(); err != nil {
-		fmt.Printf("Main Error loading environmental variables: %s", err)
-		return
-	}
 
 	// ...
 	// Use `PORT` provided in environment or default to 8080

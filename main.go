@@ -22,13 +22,14 @@ func envPortOr(port string) string {
 func main() {
 
 	if err := godotenv.Load(); err != nil {
-		fmt.Println("Error loading environmental variables")
+		fmt.Println("Main Error loading environmental variables")
 		return
 	}
 
 	// ...
 	// Use `PORT` provided in environment or default to 8080
 	var port = envPortOr("8080")
+
 	r := gin.Default()
 	SetupRoutes(r)
 

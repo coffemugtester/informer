@@ -9,14 +9,10 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 )
 
 func GetItemDetails(c *gin.Context) {
-	if err := godotenv.Load(); err != nil {
-		fmt.Println("Error loading environmental variables")
-		return
-	}
+
 	apiKey := os.Getenv("API_KEY")
 	externalAPIURL := "https://maps.googleapis.com/maps/api/place/details/json?fields=name%2Crating%2Copening_hours%2Cwebsite%2Caddress_components%2Cadr_address%2Cbusiness_status%2Cformatted_address%2Cformatted_phone_number%2Cgeometry%2Crating%2Cuser_ratings_total%2Creviews%2Copening_hours%2Cphotos&reviews_sort=newest&reviews_no_translations=true&place_id=ChIJs6C7pbRRqEcRu0jebrF6XuQ&key=" + apiKey
 

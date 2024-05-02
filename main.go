@@ -11,7 +11,7 @@ import (
 // value in `port` parameter otherwise. The returned port
 // is prefixed with a `:`, e.g. `":8080"`.
 // TODO: refactor name and move to some internal directory: isDevEnv() string {}
-func envPortOr(port string) string {
+func isDev() string {
 	if err := godotenv.Load(); err != nil {
 		fmt.Printf("Main Error loading environmental variables: %s", err)
 		return ""
@@ -21,19 +21,17 @@ func envPortOr(port string) string {
 		return ":" + envPort
 	}
 	// Otherwise, return the value of `port` variable from function argument
-	return ":" + port
+	return "8080"
 }
 
 func main() {
 
-	// Use `PORT` provided in environment or default to 8080
-	var port = envPortOr("8080")
+	var port = isDev()
 
 	r := gin.Default()
 	SetupRoutes(r)
 
-	// Listen on all available network interfaces (0.0.0.0) on the specified port
-	if err := r.Run("0.0.0.0" + port); err != nil {
+	if err := r.Run("0.0.0.0:" + port); err != nil {
 		fmt.Printf("Error starting the server: %v", err)
 		return
 	}

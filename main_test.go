@@ -12,6 +12,20 @@ import (
 	"testing"
 )
 
+func TestIsDev(t *testing.T) {
+	// Test the isDev function
+
+	t.Run("isDev with empty port", func(t *testing.T) {
+
+		want := ":8080"
+		got := isDev()
+
+		assert.Equal(t, want, got)
+
+	})
+
+}
+
 func TestGetItemDetails(t *testing.T) {
 	// Set up a Gin router
 	router := gin.Default()

@@ -10,7 +10,6 @@ import (
 // Returns PORT from environment if found, defaults to
 // value in `port` parameter otherwise. The returned port
 // is prefixed with a `:`, e.g. `":8080"`.
-// TODO: refactor name and move to some internal directory: isDevEnv() string {}
 func isDev() string {
 	if err := godotenv.Load(); err != nil {
 		fmt.Printf("Main Error loading environmental variables: %s", err)

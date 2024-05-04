@@ -8,6 +8,7 @@ import (
 )
 
 func SetupRoutes(r *gin.Engine) {
+	r.GET("/embajada", func(c *gin.Context) {})
 	if port := isDev(); port == "8080" {
 		r.GET("/mock", func(c *gin.Context) {
 			response := model.Response{

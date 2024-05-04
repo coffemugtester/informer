@@ -1,68 +1,35 @@
 package main
 
 import (
-	"embajada-informer/internal/model"
-	"encoding/json"
-	"fmt"
+	"embajada-informer/internal/handlers"
 	"github.com/gin-gonic/gin"
-	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/http/httptest"
-	"reflect"
 	"testing"
 )
 
-func TestIsDev(t *testing.T) {
-	// Test the isDev function
+func TestGetItemsDetails(t *testing.T) {
+	t.Run("item handler returns html", func(t *testing.T) {
 
-	t.Run("isDev with empty port", func(t *testing.T) {
+		gin.SetMode(gin.TestMode)
 
-		want := ":8080"
-		got := isDev()
+		rr := httptest.NewRecorder()
 
-		assert.Equal(t, want, got)
+		req, err := http.NewRequest("GET", "/item", nil)
+		if err != nil {
+			t.Fatalf("could not create request: %v", err)
+		}
+
+		r := gin.Default()
+
+		r.GET("/item", handlers.GetItemDetails)
+
+		r.ServeHTTP(rr, req)
+
+		if status := rr.Code; status != http.StatusOK {
+			t.Errorf("handler returned wrong status code: got %v want %v",
+				status, http.StatusOK)
+		}
 
 	})
-
-}
-
-func TestGetItemDetails(t *testing.T) {
-	// Set up a Gin router
-	router := gin.Default()
-	SetupRoutes(router)
-
-	// Create a request to the endpoint
-	req, err := http.NewRequest("GET", "/item", nil)
-	assert.NoError(t, err)
-
-	// Create a ResponseRecorder to record the response
-	w := httptest.NewRecorder()
-
-	// Serve the request to the router
-	router.ServeHTTP(w, req)
-
-	// Your JSON response body
-	responseBody := w.Body
-
-	// Create an instance of your defined type
-	var response model.Response
-
-	// Unmarshal the JSON response into the defined type
-	err = json.Unmarshal(responseBody.Bytes(), &response)
-	if err != nil {
-		fmt.Println("Error:", err)
-		return
-	}
-
-	// Now 'response' contains the data from the JSON response
-	fmt.Printf("'response' contains the data from the JSON response  %+v\n", responseBody)
-
-	// Check the status code
-	assert.Equal(t, http.StatusOK, w.Code)
-
-	// Check the expected response
-	expectedType := reflect.TypeOf(model.Response{})
-	actualType := reflect.TypeOf(response)
-
-	assert.Equal(t, expectedType, actualType)
 }

@@ -11,6 +11,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func GetVIP(c *gin.Context) {
+	c.HTML(http.StatusOK, "index.html", gin.H{"title": "VIP"})
+}
+
 func GetItemDetails(c *gin.Context) {
 
 	apiKey := os.Getenv("API_KEY")
@@ -42,8 +46,6 @@ func GetItemDetails(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-
-	fmt.Printf("THE UNMARSHALLED BODY: %v", item)
 
 	// Respond with the decoded item or perform further processing
 	c.JSON(http.StatusOK, item)

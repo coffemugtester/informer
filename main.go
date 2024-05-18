@@ -7,10 +7,13 @@ import (
 	"os"
 )
 
+const devEnvPort = "8080"
+
 func main() {
 	var port = isDev()
 
 	r := gin.Default()
+	r.LoadHTMLGlob("./templates/*")
 	SetupRoutes(r)
 
 	if err := r.Run("0.0.0.0:" + port); err != nil {
@@ -32,5 +35,5 @@ func isDev() string {
 		return ":" + envPort
 	}
 	// Otherwise, return the value of `port` variable from function argument
-	return "8080"
+	return devEnvPort
 }

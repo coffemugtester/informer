@@ -1,0 +1,21 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.header {
+  background-color: #f1f1f1;
+  padding: 20px;
+}
+
+.material-symbols-outlined.md-80 {
+  font-size: 80px;
+}
+
+.content {
+  display: grid;
+  height: 40vh;
+  grid-template-columns: 0.15fr 1fr 1fr 0.15fr;
+  grid-template-rows:  0.5fr 0.3fr 1fr;
+}

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	"net/http"
 	"os"
 )
 
@@ -13,6 +14,7 @@ func main() {
 	var port = isDev()
 
 	r := gin.Default()
+	r.StaticFS("/static", http.Dir("./static"))
 	r.LoadHTMLGlob("./templates/*")
 	SetupRoutes(r)
 
